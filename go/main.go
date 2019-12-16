@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"minohen-card/handler"
 )
@@ -8,6 +9,13 @@ import (
 
 func main()  {
 	router := gin.Default()
+
+	// CORS 対応
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:8080"}
+	router.Use(cors.New(config))
+
+
 
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "hello, API")
