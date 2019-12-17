@@ -12,7 +12,7 @@ func main()  {
 
 	// CORS 対応
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:8080"}
+	config.AllowOrigins = []string{"*"}
 	router.Use(cors.New(config))
 
 
