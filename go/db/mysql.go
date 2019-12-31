@@ -2,48 +2,55 @@ package db
 
 import (
 	"database/sql"
-	"fmt"
 	"log"
-	"minohen-card/handler"
+	"minohen-card/entity"
 )
 
-var (
-	Db  *sql.DB
-	err error
-)
-
-func Testget() *model.MysqlResponse {
-	var res handler.Card
-	rows, err := Db.Query("select * from mgram_card")
+func ConnectionDB() *sql.DB {
+	db, err := sql.Open("mysql", "docker:docker@tcp(127.0.0.1:3306)/card_database")
 	if err != nil {
-		log.Println("クエリ検索のところ")
-		log.Println(err)
+		log.Fatal("db error.")
 	}
+	return db
+}
 
+func FetchAllCrad() []entity.MgramCard{
+	db := ConnectionDB()
+
+	rows, err := db.Query("select * from mgram_cards")
+	if err != nil {
+		log.Fatal(err)
+	}
+	var response []entity.MgramCard
 	for rows.Next() {
-		err := rows.Scan(&res)
-		if err != nil {
-			panic(err)
+		var Id int
+		res := entity.MgramCard{}
+		if err := rows.Scan(
+			&Id,
+			&res.Facebook_id,
+			&res.Nickname,
+			&res.Year,
+			&res.Month,
+			&res.Twitter_id,
+			&res.Team1,
+			&res.Team2,
+			&res.Word,
+			&res.Mgram1,
+			&res.Mgram2,
+			&res.Mgram3,
+			&res.Mgram4,
+			&res.Mgram5,
+			&res.Mgram6,
+			&res.Mgram7,
+			&res.Mgram8,
+			&res.Mgram9,
+			&res.Area,
+			&res.Card_color); err != nil {
+			log.Fatal(err)
 		}
-		fmt.Println(id, name)
+		response = append(response,res)
 	}
-
-
-	return res
+	//fmt.Println(response)
+	return response
 }
-func init() {
-	//q := config.MYSQL_USER + ":" + config.MYSQL_PASSWORD + "@tcp(" + config.MYSQL_HOSTNAME + ":" + config.MYSQL_PORT + ")/" + config.MYSQL_DATABASE
-	//log.Println(q)
-	//log.Println(config.MYSQL_ROOT_PASSWORD)
-	//log.Println(config.MYSQL_HOSTNAME)
-	//log.Println(config.MYSQL_PORT)
-	//log.Println(config.MYSQL_DATABASE)
 
-	q :=  "docker" + ":" + "docker" + "@tcp(" + "localhost" + ":" + "3306" + ")/" + "card_database"
-
-	Db, err = sql.Open("mysql", q)
-	if err != nil {
-		log.Println("error: mysql init error.")
-		log.Fatalln(err)
-	}
-}
