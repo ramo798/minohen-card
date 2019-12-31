@@ -21,7 +21,8 @@ func main()  {
 	router.GET("/", func(c *gin.Context) {
 		c.String(200, "hello, API")
 	})
-	router.GET("/test",handler.GetAllCrad)
+	router.GET("/card/all",handler.GetAllCrad)
+	router.POST("/register",handler.PostProf)
 
 	router.Run(":80")
 
