@@ -24,4 +24,4 @@ create table IF not exists `mgram_cards`(
     PRIMARY KEY (`Id`)
 ) DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO mgram_cards(facebook_id, nickname, year, month, twitter_id, team1, team2, word, mgram1, mgram2, mgram3, mgram4, mgram5, mgram6, mgram7, mgram8, mgram9, area, card_color) VALUE ('testid','ramo4',2022,5,'ramo4','関西','エンジニア','一言一言','mgram1','mgram2','mgram3','mgram4','mgram5','mgram6','mgram7','mgram8','mgram9','osaka',1);
+INSERT INTO mgram_cards(facebook_id, nickname, year, month, twitter_id, team1, team2, word, mgram1, mgram2, mgram3, mgram4, mgram5, mgram6, mgram7, mgram8, mgram9, area, card_color) VALUE ('testid','ramo4',2022,5,'ramo4','kansai','eng','word','mgram1','mgram2','mgram3','mgram4','mgram5','mgram6','mgram7','mgram8','mgram9','osaka',1);
