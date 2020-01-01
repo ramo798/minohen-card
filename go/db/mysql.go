@@ -7,14 +7,19 @@ import (
 )
 
 func ConnectionDB() *sql.DB {
-	db, err := sql.Open("mysql", "docker:docker@tcp(127.0.0.1:3306)/card_database")
+	//MYSQL_HOSTNAME, existsEnv := os.LookupEnv("MYSQL_HOSTNAME")
+	//if !existsEnv {
+	//	log.Println("MYSQL_HOSTNAME is not exists")
+	//}
+	//
+	db, err := sql.Open("mysql", "docker:docker@tcp(" + "mysql" +":3306)/card_database")
 	if err != nil {
 		log.Fatal("db error.")
 	}
 	return db
 }
 
-func FetchAllCrad() []entity.MgramCard{
+func FetchAllCard() []entity.MgramCard{
 	db := ConnectionDB()
 
 	rows, err := db.Query("select * from mgram_cards")
@@ -52,5 +57,16 @@ func FetchAllCrad() []entity.MgramCard{
 	}
 	//fmt.Println(response)
 	return response
+}
+
+func RegisterCard(res entity.MgramCard)  {
+	db := ConnectionDB()
+
+	ins, err := db.Prepare("INSERT INTO mgram_cards(facebook_id, nickname, year, month, twitter_id, team1, team2, word, mgram1, mgram2, mgram3, mgram4, mgram5, mgram6, mgram7, mgram8, mgram9, area, card_color) VALUE (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ins.Exec(res.Facebook_id, res.Nickname, res.Year, res.Month, res.Twitter_id, res.Team1, res.Team2, res.Word, res.Mgram1, res.Mgram2, res.Mgram3, res.Mgram4, res.Mgram5, res.Mgram6, res.Mgram7, res.Mgram8, res.Mgram9, res.Area, res.Card_color)
 }
 

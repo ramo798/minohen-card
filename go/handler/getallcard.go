@@ -7,7 +7,7 @@ import (
 
 
 func GetAllCrad(c *gin.Context){
-	response := db.FetchAllCrad()
+	response := db.FetchAllCard()
 	//log.Println(response)
 	//log.Println(reflect.TypeOf(response))
 	c.JSON(200, response)

@@ -1,9 +1,9 @@
 version: '3'
 
 services:
-  db:
+  mysql:
+    container_name: mysql
     image: mysql:5.7
-    container_name: mysql_host
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: card_database
@@ -17,3 +17,13 @@ services:
       - ./docker/db/sql:/docker-entrypoint-initdb.d
     ports:
       - 3306:3306
+
+  api:
+    build: ./go
+    depends_on:
+      - mysql
+    restart: always
+    environment:
+      MYSQL_HOSTNAME: mysql
+    ports:
+      - "80:80"
