@@ -7,6 +7,17 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "rules": {
+    "no-console": 0,
+    "prettier/prettier": [
+      "error",
+      {
+        "semi": false,
+        "trailingComma": "all",
+        "singleQuote": true
+      }
+    ]
+  },
   "dependencies": {
     "axios": "^0.19.0",
     "core-js": "^3.4.3",
